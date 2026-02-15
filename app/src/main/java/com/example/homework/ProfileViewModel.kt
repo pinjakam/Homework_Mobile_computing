@@ -2,6 +2,7 @@ package com.example.homework
 
 import android.app.Application
 import android.net.Uri
+import androidx.compose.runtime.mutableStateListOf
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -23,6 +24,13 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     val imageUriFlow: Flow<String> =
         application.dataStore.data.map { it[IMAGE_URI] ?: "" }
+
+    // Notifications list
+    val notifications = mutableStateListOf<String>()
+
+    fun addNotification(text: String) {
+        notifications.add(0, text)
+    }
 
     fun saveProfile(username: String, imageUri: Uri?) {
         viewModelScope.launch {
